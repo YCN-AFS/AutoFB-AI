@@ -8,6 +8,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Demo request submission endpoint
   app.post("/api/demo-request", async (req, res) => {
     try {
+      console.log("Received data:", req.body);
       const validatedData = insertDemoRequestSchema.parse(req.body);
       const demoRequest = await storage.createDemoRequest(validatedData);
       
@@ -17,6 +18,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         id: demoRequest.id 
       });
     } catch (error) {
+      console.log("Validation error:", error);
       if (error instanceof z.ZodError) {
         res.status(400).json({
           success: false,
