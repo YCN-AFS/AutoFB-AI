@@ -49,20 +49,20 @@ export class MemStorage implements IStorage {
     };
     this.demoRequests.set(id, demoRequest);
     
-    // Send to webhook
+    // Send to webhook - this must succeed for the request to be considered successful
+    const webhookData = {
+      fullName: insertRequest.fullName,
+      phone: insertRequest.phone,
+      email: insertRequest.email || "",
+      requirements: insertRequest.requirements || "",
+      timestamp: new Date().toISOString()
+    };
+
+    // Set environment variable to ignore SSL certificate errors
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
     try {
-      const webhookData = {
-        fullName: insertRequest.fullName,
-        phone: insertRequest.phone,
-        email: insertRequest.email || "",
-        requirements: insertRequest.requirements || "",
-        timestamp: new Date().toISOString()
-      };
-
-      // Set environment variable to ignore SSL certificate errors
-      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-
-      const response = await fetch("https://n8n.tr1nh.net/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b", {
+      const response = await fetch("http://n8n.tr1nh.net/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,6 +75,7 @@ export class MemStorage implements IStorage {
 
       if (!response.ok) {
         console.error("Webhook failed:", response.status, response.statusText);
+        throw new Error(`Webhook failed with status: ${response.status}`);
       } else {
         console.log("Webhook sent successfully:", response.status);
       }
@@ -82,6 +83,8 @@ export class MemStorage implements IStorage {
       console.error("Error sending to webhook:", error);
       // Reset the environment variable even if there's an error
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
+      // Re-throw the error so the API returns an error response
+      throw new Error("Không thể gửi thông tin đến hệ thống. Vui lòng thử lại sau.");
     }
     
     return demoRequest;
