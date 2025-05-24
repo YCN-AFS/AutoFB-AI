@@ -59,23 +59,29 @@ export class MemStorage implements IStorage {
         timestamp: new Date().toISOString()
       };
 
+      // Set environment variable to ignore SSL certificate errors
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
       const response = await fetch("https://n8n.tr1nh.net/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(webhookData),
-        // Ignore SSL certificate verification for this webhook
-        agent: new (await import('https')).Agent({
-          rejectUnauthorized: false
-        })
       });
+
+      // Reset the environment variable
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
 
       if (!response.ok) {
         console.error("Webhook failed:", response.status, response.statusText);
+      } else {
+        console.log("Webhook sent successfully:", response.status);
       }
     } catch (error) {
       console.error("Error sending to webhook:", error);
+      // Reset the environment variable even if there's an error
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = '1';
     }
     
     return demoRequest;
