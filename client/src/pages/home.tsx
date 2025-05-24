@@ -34,6 +34,7 @@ import {
   Rocket,
   Globe
 } from "lucide-react";
+import { SiFacebook } from "react-icons/si";
 
 export default function Home() {
   const { toast } = useToast();
@@ -390,7 +391,7 @@ export default function Home() {
                   <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-lg mb-4">
                     <MessageSquare className="h-6 w-6" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Telegram Bot</h3>
+                  <h3 className="text-lg font-bold mb-2">Telegram hoặc Zalo Bot</h3>
                   <p className="text-sm opacity-90">Thông báo & kiểm soát</p>
                 </div>
               </div>
@@ -450,14 +451,15 @@ export default function Home() {
                       <div className="font-semibold text-gray-700">Chủ đề</div>
                       <div className="font-semibold text-gray-700">Trạng thái</div>
                       <div className="font-semibold text-gray-700">Thời gian</div>
+
                       
                       <div className="text-gray-600">24/05</div>
-                      <div className="text-gray-600">Tuyển sinh</div>
+                      <div className="text-gray-600">Case study</div>
                       <div><span className="bg-accent-green text-white px-2 py-1 rounded text-xs">Đã đăng</span></div>
                       <div className="text-gray-600">14:30</div>
                       
                       <div className="text-gray-600">25/05</div>
-                      <div className="text-gray-600">Sự kiện</div>
+                      <div className="text-gray-600">Tin tức</div>
                       <div><span className="bg-accent-orange text-white px-2 py-1 rounded text-xs">Lên lịch</span></div>
                       <div className="text-gray-600">09:00</div>
                     </div>
@@ -1187,7 +1189,7 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Kết nối</h4>
               <div className="flex space-x-4 mb-4">
                 <a href="https://www.facebook.com/automarketing.amk" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                  <Globe className="h-5 w-5" />
+                  <SiFacebook className="h-5 w-5" />
                 </a>
                 <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                   <MessageSquare className="h-5 w-5" />
