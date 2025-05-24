@@ -1,0 +1,33 @@
+Bạn là chuyên gia thiết kế UX/UI và landing page trong lĩnh vực công nghệ. Nhiệm vụ của bạn là tạo bản mô tả nội dung chi tiết để thiết kế một landing page chuyên nghiệp và thuyết phục cho một giải pháp công nghệ tự động hóa.
+
+Tên tạm thời của giải pháp: "Hệ thống Tự động hóa Quản lý và Sáng tạo Nội dung Facebook Tích hợp AI". Đây là hệ thống giúp tự động lập kế hoạch, tạo nội dung và đăng bài cho Fanpage bằng cách kết hợp Google Sheets, n8n, AI (Google Gemini) và Telegram. Mục tiêu là giải quyết các vấn đề phổ biến khi quản lý fanpage thủ công như mất thời gian, dễ sai sót, bí ý tưởng, khó kiểm soát và đo lường.
+
+Yêu cầu của bạn là viết ra cấu trúc nội dung đầy đủ và chi tiết của một landing page hiệu quả, thuyết phục, dễ hiểu, dễ thao tác. Hãy mô tả văn bản nội dung từng phần như thể bạn đang viết nội dung thật để đưa lên trang web, với ngôn ngữ tự nhiên và phù hợp với độc giả là:
+
+Các phòng ban, đơn vị trong tổ chức (ví dụ trường đại học, doanh nghiệp vừa và nhỏ)
+
+Bộ phận marketing, truyền thông, tuyển sinh
+
+Người đang quản lý fanpage hoặc chịu trách nhiệm sản xuất nội dung mạng xã hội
+
+Cấu trúc cần bao gồm các phần sau:
+
+Phần đầu trang (Hero Section) gồm tiêu đề chính ngắn gọn và mạnh mẽ, mô tả ngắn về giải pháp, một lời kêu gọi hành động rõ ràng (ví dụ: Tìm hiểu thêm, Đăng ký demo, Xem video).
+
+Trình bày 3 đến 4 vấn đề lớn mà người dùng đang gặp phải khi làm truyền thông Facebook thủ công.
+
+Giới thiệu giải pháp với mô tả tổng quan và cách hệ thống hoạt động gồm 4 thành phần chính: Google Sheets, n8n, AI Gemini, Telegram. Hãy mô tả vai trò của từng thành phần.
+
+Danh sách các lợi ích chính của giải pháp, mỗi lợi ích đi kèm một đoạn mô tả ngắn.
+
+Một ví dụ cụ thể về bài đăng do hệ thống tạo ra hoặc minh họa bằng quy trình thực tế.
+
+Danh sách công nghệ nền tảng đã sử dụng, kèm mô tả ngắn (ví dụ: n8n là công cụ gì, AI Gemini làm gì).
+
+Phần giới thiệu ngắn về đội ngũ phát triển giải pháp (ví dụ là sáng kiến từ chuyên gia công nghệ thông tin của một đơn vị giáo dục).
+
+Một lời kêu gọi hành động cuối trang, khuyến khích đăng ký demo hoặc liên hệ tư vấn.
+
+Yêu cầu về phong cách: văn phong chuyên nghiệp, hiện đại, dễ tiếp cận, thể hiện sự đáng tin cậy, đổi mới và hiệu quả.
+
+Yêu cầu về màu sắc và thiết kế giao diện: chủ đạo là xanh dương (#007BFF), xám (#4A4A4A), trắng; có thể dùng cam (#FF6B00) hoặc xanh lá (#28A745) làm điểm nhấn. Kiểu chữ gợi ý: sans-serif như Montserrat hoặc Roboto.
