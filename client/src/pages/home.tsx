@@ -703,7 +703,7 @@ export default function Home() {
                     <p>📈 <strong>Tỷ lệ có việc làm sau tốt nghiệp: 95%</strong><br/>
                     💰 <strong>Mức lương khởi điểm: 12-18 triệu/tháng</strong></p>
                     
-                    <p>📞 Đăng ký tư vấn ngay: 0xxx.xxx.xxx<br/>
+                    <p>📞 Đăng ký tư vấn ngay: 0946734111<br/>
                     🌐 Website: www.university-abc.edu.vn</p>
                     
                     <p className="text-primary">#TuyenSinh2024 #CongNgheThongTin #DaiHocABC #IT #Technology</p>
@@ -873,7 +873,7 @@ export default function Home() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-white" id="team">
+      {/* <section className="py-20 bg-white" id="team">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -928,7 +928,7 @@ export default function Home() {
             
             <div className="mt-12 lg:mt-0">
               <div className="grid grid-cols-1 gap-6">
-                {/* Team members */}
+
                 <Card className="bg-gradient-to-r from-primary/5 to-white shadow-lg">
                   <CardContent className="p-6">
                     <div className="flex items-center space-x-4">
@@ -975,18 +975,18 @@ export default function Home() {
                 </Card>
               </div>
               
-              {/* Contact info */}
+          
               <Card className="mt-8 bg-gray-900 text-white">
                 <CardContent className="p-6">
                   <h4 className="font-bold mb-4">Thông tin liên hệ</h4>
                   <div className="space-y-3 text-sm">
                     <div className="flex items-center space-x-3">
                       <Mail className="text-gray-400 h-4 w-4" />
-                      <span>support@autofb-ai.edu.vn</span>
+                      <span>nmson@lhu.edu.vn</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <Phone className="text-gray-400 h-4 w-4" />
-                      <span>0xxx.xxx.xxx</span>
+                      <span>0946734111</span>
                     </div>
                     <div className="flex items-center space-x-3">
                       <Globe className="text-gray-400 h-4 w-4" />
@@ -998,7 +998,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Final CTA Section */}
       <section className="py-20 gradient-primary" id="cta">
@@ -1040,7 +1040,7 @@ export default function Home() {
                           <FormItem>
                             <FormLabel>Số điện thoại *</FormLabel>
                             <FormControl>
-                              <Input placeholder="0xxx.xxx.xxx" {...field} />
+                              <Input placeholder="0946734111" {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -1125,7 +1125,7 @@ export default function Home() {
                   <Phone className="h-6 w-6" />
                 </div>
                 <h4 className="font-semibold mb-2">Gọi trực tiếp</h4>
-                <p className="text-blue-100">0xxx.xxx.xxx</p>
+                <p className="text-blue-100">0946734111</p>
                 <p className="text-sm text-blue-200">8:00 - 17:00 (T2-T6)</p>
               </div>
               
@@ -1134,7 +1134,7 @@ export default function Home() {
                   <Mail className="h-6 w-6" />
                 </div>
                 <h4 className="font-semibold mb-2">Gửi email</h4>
-                <p className="text-blue-100">support@autofb-ai.edu.vn</p>
+                <p className="text-blue-100">nmson@lhu.edu.vn</p>
                 <p className="text-sm text-blue-200">Phản hồi trong 2h</p>
               </div>
               
@@ -1142,8 +1142,8 @@ export default function Home() {
                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
                   <MessageSquare className="h-6 w-6" />
                 </div>
-                <h4 className="font-semibold mb-2">Chat Telegram</h4>
-                <p className="text-blue-100">@AutoFB_Support</p>
+                <h4 className="font-semibold mb-2">Chat Zalo</h4>
+                <p className="text-blue-100"><a href="">Nguyễn Minh Sơn</a></p>
                 <p className="text-sm text-blue-200">Hỗ trợ tức thì</p>
               </div>
             </div>
