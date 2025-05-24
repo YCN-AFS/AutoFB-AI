@@ -88,7 +88,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-primary">AutoFB AI</h1>
+              <h1 className="text-xl font-bold text-primary">Auto Marketing - AMK</h1>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
@@ -1156,7 +1156,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">AutoFB AI</h3>
+              <h3 className="text-xl font-bold mb-4">Auto Marketing - AMK</h3>
               <p className="text-gray-400 leading-relaxed">
                 Giải pháp tự động hóa quản lý Facebook thông minh, 
                 giúp tổ chức tiết kiệm thời gian và nâng cao hiệu quả truyền thông.
