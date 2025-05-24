@@ -12,11 +12,8 @@ export const demoRequests = pgTable("demo_requests", {
   id: serial("id").primaryKey(),
   fullName: text("full_name").notNull(),
   phone: text("phone").notNull(),
-  email: text("email").notNull(),
-  organization: text("organization").notNull(),
-  organizationType: text("organization_type"),
+  email: text("email"),
   requirements: text("requirements"),
-  agree: text("agree").notNull(),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -31,11 +28,8 @@ export const insertDemoRequestSchema = createInsertSchema(demoRequests).omit({
 }).extend({
   fullName: z.string().min(2, "Họ và tên phải có ít nhất 2 ký tự"),
   phone: z.string().min(10, "Số điện thoại không hợp lệ"),
-  email: z.string().email("Email không hợp lệ"),
-  organization: z.string().min(2, "Tên tổ chức phải có ít nhất 2 ký tự"),
-  organizationType: z.string().optional(),
+  email: z.string().email("Email không hợp lệ").optional().or(z.literal("")),
   requirements: z.string().optional(),
-  agree: z.string().min(1, "Bạn phải đồng ý với điều khoản"),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

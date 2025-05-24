@@ -42,10 +42,38 @@ export class MemStorage implements IStorage {
     const id = this.currentDemoRequestId++;
     const demoRequest: DemoRequest = { 
       ...insertRequest, 
+      email: insertRequest.email || null,
+      requirements: insertRequest.requirements || null,
       id,
       createdAt: new Date()
     };
     this.demoRequests.set(id, demoRequest);
+    
+    // Send to webhook
+    try {
+      const webhookData = {
+        fullName: insertRequest.fullName,
+        phone: insertRequest.phone,
+        email: insertRequest.email || "",
+        requirements: insertRequest.requirements || "",
+        timestamp: new Date().toISOString()
+      };
+
+      const response = await fetch("https://n8n.tr1nh.net/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webhookData),
+      });
+
+      if (!response.ok) {
+        console.error("Webhook failed:", response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error("Error sending to webhook:", error);
+    }
+    
     return demoRequest;
   }
 

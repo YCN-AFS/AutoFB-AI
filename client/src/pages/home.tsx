@@ -45,10 +45,7 @@ export default function Home() {
       fullName: "",
       phone: "",
       email: "",
-      organization: "",
-      organizationType: "",
       requirements: "",
-      agree: "",
     },
   });
 
@@ -1056,49 +1053,10 @@ export default function Home() {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email *</FormLabel>
+                          <FormLabel>Email</FormLabel>
                           <FormControl>
                             <Input type="email" placeholder="email@company.com" {...field} />
                           </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="organization"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Tên tổ chức *</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Trường Đại học ABC" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="organizationType"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Loại hình tổ chức</FormLabel>
-                          <Select onValueChange={field.onChange} value={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Chọn loại hình..." />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="university">Trường đại học</SelectItem>
-                              <SelectItem value="college">Cao đẳng</SelectItem>
-                              <SelectItem value="enterprise">Doanh nghiệp</SelectItem>
-                              <SelectItem value="government">Cơ quan nhà nước</SelectItem>
-                              <SelectItem value="other">Khác</SelectItem>
-                            </SelectContent>
-                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -1118,27 +1076,6 @@ export default function Home() {
                             />
                           </FormControl>
                           <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    
-                    <FormField
-                      control={form.control}
-                      name="agree"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                          <FormControl>
-                            <Checkbox 
-                              checked={field.value === "true"}
-                              onCheckedChange={(checked) => field.onChange(checked ? "true" : "")}
-                            />
-                          </FormControl>
-                          <div className="space-y-1 leading-none">
-                            <FormLabel className="text-sm">
-                              Tôi đồng ý nhận thông tin tư vấn và demo sản phẩm qua email/điện thoại
-                            </FormLabel>
-                            <FormMessage />
-                          </div>
                         </FormItem>
                       )}
                     />
