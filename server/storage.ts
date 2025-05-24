@@ -62,7 +62,7 @@ export class MemStorage implements IStorage {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
     try {
-      const response = await fetch("http://n8n.tr1nh.net/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b", {
+      const response = await fetch("http://auto.s4h.edu.vn/webhook/c589f124-73e3-4998-a9e1-6edcadd3a16b", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

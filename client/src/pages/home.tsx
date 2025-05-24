@@ -110,12 +110,12 @@ export default function Home() {
                 >
                   Công nghệ
                 </button>
-                <button 
+                {/* <button 
                   onClick={() => scrollToSection('team')}
                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Về chúng tôi
-                </button>
+                </button> */}
                 <Button 
                   onClick={() => scrollToSection('cta')}
                   size="sm"
@@ -151,7 +151,7 @@ export default function Home() {
                 <span className="block">với AI thông minh</span>
               </h1>
               <p className="mt-6 text-xl text-gray-600 max-w-3xl">
-                Giải pháp tích hợp Google Sheets, n8n, AI Gemini và Telegram giúp tự động lập kế hoạch, 
+                Giải pháp tích hợp Google Sheets, n8n, AI Gemini và thông báo trên Zalo, Telegram giúp tự động lập kế hoạch, 
                 tạo nội dung và đăng bài Facebook một cách chuyên nghiệp và hiệu quả.
               </p>
               <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
@@ -544,7 +544,7 @@ export default function Home() {
                   <h3 className="text-xl font-bold text-gray-900">Kiểm soát toàn diện</h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Theo dõi real-time mọi hoạt động qua Telegram. Xem báo cáo chi tiết về 
+                  Theo dõi real-time mọi hoạt động qua Zalo, Telegram. Xem báo cáo chi tiết về 
                   số lượng bài đăng, tỷ lệ tương tác và hiệu quả từng chiến dịch.
                 </p>
               </CardContent>
@@ -817,7 +817,7 @@ export default function Home() {
                 <div className="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                   <MessageSquare className="text-cyan-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">Telegram Bot</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">Telegram, Zalo Bot</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Nền tảng nhắn tin bảo mật cao, được sử dụng để gửi thông báo 
                   real-time và kiểm soát hệ thống từ xa.
@@ -1186,7 +1186,7 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Kết nối</h4>
               <div className="flex space-x-4 mb-4">
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                <a href="https://www.facebook.com/automarketing.amk" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                   <Globe className="h-5 w-5" />
                 </a>
                 <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
@@ -1203,9 +1203,9 @@ export default function Home() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 AutoFB AI. Tất cả quyền được bảo lưu.</p>
+            <p>&copy; 2025 Được phát triển bởi AMK - Auto Marketing.</p>
             <p className="mt-2 text-sm">
-              Được phát triển bởi Trường Đại học ABC - Khoa Công nghệ thông tin
+              Khoa Công nghệ Thông tin, Trường Đại học Lạc Hồng
             </p>
           </div>
         </div>
