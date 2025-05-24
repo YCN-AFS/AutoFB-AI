@@ -65,6 +65,10 @@ export class MemStorage implements IStorage {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(webhookData),
+        // Ignore SSL certificate verification for this webhook
+        agent: new (await import('https')).Agent({
+          rejectUnauthorized: false
+        })
       });
 
       if (!response.ok) {
