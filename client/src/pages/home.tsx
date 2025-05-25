@@ -804,13 +804,13 @@ export default function Home() {
                       <div className="whitespace-pre-wrap">{generatedContent}</div>
                     ) : (
                       <>
-                        <p>🎓 <strong>THÔNG BÁO TUYỂN SINH NGÀNH CÔNG NGHỆ THÔNG TIN 2024</strong></p>
+                        <p>🎓 <strong>THÔNG BÁO TUYỂN SINH NGÀNH CÔNG NGHỆ THÔNG TIN 2025</strong></p>
                         
                         <p>🌟 Bạn có đam mê với công nghệ và mong muốn trở thành chuyên gia IT tương lai? Ngành Công nghệ thông tin tại Trường Đại học ABC chính là lựa chọn hoàn hảo dành cho bạn!</p>
                         
                         <p><strong>✨ ĐIỂM NỔI BẬT:</strong><br/>
                         🔹 Chương trình đào tạo cập nhật theo chuẩn quốc tế<br/>
-                        🔹 Đội ngũ giảng viên giàu kinh nghiệm thực tế<br/>
+                        🔹 Các dự án đã áp dụng vào thực tế<br/>
                         🔹 Trang thiết bị lab hiện đại, môi trường học tập chuyên nghiệp<br/>
                         🔹 Cơ hội thực tập tại các công ty công nghệ hàng đầu</p>
                         

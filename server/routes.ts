@@ -61,11 +61,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           message: "Vui lòng cung cấp đầy đủ thông tin chủ đề và tone"
         });
       }
-      const prompt = `Tạo một bài đăng Facebook chuyên nghiệp về chủ đề "${topic}" với tone ${tone}. 
+      const prompt = `Tạo một bài đăng Facebook chuyên nghiệp cho trang Auto Marketing - AMK (lĩnh vực auto marketing) về chủ đề "${topic}" với tone ${tone}. 
       
 Yêu cầu:
 - Viết bằng tiếng Việt
-- Độ dài khoảng 300-400 từ
+- Không sử dụng định dạng markdown hoặc in đậm; văn bản thuần
+- Độ dài khoảng 100-200 từ
 - Sử dụng emoji phù hợp
 - Có call-to-action rõ ràng
 - Phù hợp cho fanpage của trường đại học/doanh nghiệp
