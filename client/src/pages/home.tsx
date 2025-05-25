@@ -226,8 +226,10 @@ export default function Home() {
             <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
               {/* Workflow visualization */}
               <div className="relative mx-auto w-full rounded-lg shadow-2xl lg:max-w-md">
-                <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-lg p-6 shadow-2xl">
-                  <div className="mb-4">
+                <div>
+                  <img src="src/images/background.jpeg" alt="Background" />
+
+                  {/* <div className="mb-4">
                     <div className="flex items-center space-x-2 mb-3">
                       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -299,7 +301,7 @@ export default function Home() {
                       <CheckCircle className="mr-1 h-3 w-3" />
                       Hoạt động
                     </span>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
