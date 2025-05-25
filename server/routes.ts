@@ -50,6 +50,66 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+    // Generate Facebook content using Gemini AI
+  app.post("/api/generate-content", async (req, res) => {
+    try {
+      const { topic, tone, date, time } = req.body;
+      
+      if (!topic || !tone) {
+        return res.status(400).json({
+          success: false,
+          message: "Vui lòng cung cấp đầy đủ thông tin chủ đề và tone"
+        });
+      }
+      const prompt = `Tạo một bài đăng Facebook chuyên nghiệp về chủ đề "${topic}" với tone ${tone}. 
+      
+Yêu cầu:
+- Viết bằng tiếng Việt
+- Độ dài khoảng 300-400 từ
+- Sử dụng emoji phù hợp
+- Có call-to-action rõ ràng
+- Phù hợp cho fanpage của trường đại học/doanh nghiệp
+- Kết thúc với hashtag phù hợp
+- Tone: ${tone}
+Hãy tạo nội dung hấp dẫn, tự nhiên và thu hút người đọc.`;
+      const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${process.env.GOOGLE_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }]
+        })
+      });
+      if (!geminiResponse.ok) {
+        throw new Error(`Gemini API error: ${geminiResponse.status}`);
+      }
+      const geminiData = await geminiResponse.json();
+      const generatedContent = geminiData.candidates[0].content.parts[0].text;
+      res.json({
+        success: true,
+        content: generatedContent,
+        metadata: {
+          topic,
+          tone,
+          date,
+          time,
+          generatedAt: new Date().toISOString()
+        }
+      });
+    } catch (error) {
+      console.error("Error generating content:", error);
+      res.status(500).json({
+        success: false,
+        message: "Không thể tạo nội dung. Vui lòng thử lại sau."
+      });
+    }
+  });
+  
   const httpServer = createServer(app);
   return httpServer;
 }

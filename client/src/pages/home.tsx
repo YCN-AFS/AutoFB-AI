@@ -12,6 +12,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { format } from "date-fns";
+import { vi } from "date-fns/locale";
 import { 
   Clock, 
   AlertTriangle, 
@@ -32,13 +36,25 @@ import {
   BarChart3,
   Cog,
   Rocket,
-  Globe
+  Globe,
+  CalendarIcon
 } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 
 export default function Home() {
   const { toast } = useToast();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    // Demo interactive states
+  const [demoInputs, setDemoInputs] = useState({
+    topic: "Tuyển sinh ngành Công nghệ thông tin",
+    tone: "Thân thiện, chuyên nghiệp",
+    date: "25/05/2024",
+    time: "09:00",
+    selectedDate: new Date(2024, 4, 25), // May 25, 2024 (month is 0-indexed)
+  });
+  const [generatedContent, setGeneratedContent] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const form = useForm<InsertDemoRequest>({
     resolver: zodResolver(insertDemoRequestSchema),
@@ -73,6 +89,33 @@ export default function Home() {
 
   const onSubmit = (data: InsertDemoRequest) => {
     demoRequestMutation.mutate(data);
+  };
+
+    // Generate content function
+  const generateContent = async () => {
+    setIsGenerating(true);
+    try {
+      const response = await apiRequest("POST", "/api/generate-content", demoInputs);
+      const data = await response.json();
+      
+      if (data.success) {
+        setGeneratedContent(data.content);
+        toast({
+          title: "Tạo nội dung thành công!",
+          description: "AI đã tạo ra bài đăng Facebook chuyên nghiệp cho bạn.",
+        });
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error: any) {
+      toast({
+        title: "Lỗi",
+        description: error.message || "Không thể tạo nội dung, vui lòng thử lại",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -626,47 +669,112 @@ export default function Home() {
                     <div className="flex items-center space-x-4">
                       <label className="w-24 text-sm font-medium text-gray-700">Chủ đề:</label>
                       <Input 
-                        value="Tuyển sinh ngành Công nghệ thông tin" 
-                        readOnly 
+                        value={demoInputs.topic}
+                        onChange={(e) => setDemoInputs({...demoInputs, topic: e.target.value})}
                         className="flex-1 bg-white"
+                        placeholder="Nhập chủ đề bài đăng..."
                       />
                     </div>
                     <div className="flex items-center space-x-4">
                       <label className="w-24 text-sm font-medium text-gray-700">Ngày đăng:</label>
-                      <Input 
-                        value="25/05/2024" 
-                        readOnly 
-                        className="flex-1 bg-white"
-                      />
+
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className="flex-1 bg-white justify-start text-left font-normal"
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {demoInputs.selectedDate ? (
+                              format(demoInputs.selectedDate, "dd/MM/yyyy", { locale: vi })
+                            ) : (
+                              <span>Chọn ngày</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={demoInputs.selectedDate}
+                            onSelect={(date) => {
+                              if (date) {
+                                const formattedDate = format(date, "dd/MM/yyyy", { locale: vi });
+                                setDemoInputs({
+                                  ...demoInputs, 
+                                  selectedDate: date,
+                                  date: formattedDate
+                                });
+                              }
+                            }}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </div>
                     <div className="flex items-center space-x-4">
                       <label className="w-24 text-sm font-medium text-gray-700">Thời gian:</label>
-                      <Input 
-                        value="09:00" 
-                        readOnly 
-                        className="flex-1 bg-white"
-                      />
+                      <Select 
+                        value={demoInputs.time}
+                        onValueChange={(value) => setDemoInputs({...demoInputs, time: value})}
+                      >
+                        <SelectTrigger className="flex-1 bg-white">
+                          <SelectValue placeholder="Chọn thời gian" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Array.from({ length: 24 }).map((_, hour) => (
+                            [0, 30].map(minute => {
+                              const timeValue = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                              return (
+                                <SelectItem key={timeValue} value={timeValue}>
+                                  {timeValue}
+                                </SelectItem>
+                              );
+                            })
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                     <div className="flex items-center space-x-4">
                       <label className="w-24 text-sm font-medium text-gray-700">Tone:</label>
-                      <Input 
-                        value="Thân thiện, chuyên nghiệp" 
-                        readOnly 
-                        className="flex-1 bg-white"
-                      />
+                      <Select 
+                        value={demoInputs.tone} 
+                        onValueChange={(value) => setDemoInputs({...demoInputs, tone: value})}
+                      >
+                        <SelectTrigger className="flex-1 bg-white">
+                          <SelectValue placeholder="Chọn tone..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Thân thiện, chuyên nghiệp">Thân thiện, chuyên nghiệp</SelectItem>
+                          <SelectItem value="Năng động, trẻ trung">Năng động, trẻ trung</SelectItem>
+                          <SelectItem value="Trang trọng, học thuật">Trang trọng, học thuật</SelectItem>
+                          <SelectItem value="Vui tươi, sáng tạo">Vui tươi, sáng tạo</SelectItem>
+                          <SelectItem value="Nghiêm túc, uy tín">Nghiêm túc, uy tín</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </div>
                   </div>
                   
                   <div className="mt-6 flex items-center justify-center">
-                    <div className="flex items-center space-x-2 text-primary">
-                      <Brain className="h-5 w-5" />
-                      <span className="text-sm font-medium">AI đang xử lý...</span>
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                        <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                    {!isGenerating ? (
+                      <Button 
+                        onClick={generateContent}
+                        className="bg-primary hover:bg-blue-700 text-white"
+                        disabled={!demoInputs.topic.trim() || !demoInputs.tone}
+                      >
+                        <Brain className="mr-2 h-4 w-4" />
+                        Tạo nội dung với AI
+                      </Button>
+                    ) : (
+                      <div className="flex items-center space-x-2 text-primary">
+                        <Brain className="h-5 w-5" />
+                        <span className="text-sm font-medium">AI đang xử lý...</span>
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -683,8 +791,8 @@ export default function Home() {
                       <Globe className="text-white h-5 w-5" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900">Trường Đại học ABC</h4>
-                      <p className="text-sm text-gray-500">25 tháng 5 lúc 09:00 • <Globe className="inline h-3 w-3" /></p>
+                      <h4 className="font-semibold text-gray-900">Auto Marketing - AMK </h4>
+                      <p className="text-sm text-gray-500">{demoInputs.date} lúc {demoInputs.time} • <Globe className="inline h-3 w-3" /></p>
                     </div>
                   </div>
                 </div>
@@ -692,23 +800,29 @@ export default function Home() {
                 {/* Facebook post content */}
                 <CardContent className="p-4">
                   <div className="text-gray-900 leading-relaxed space-y-3">
-                    <p>🎓 <strong>THÔNG BÁO TUYỂN SINH NGÀNH CÔNG NGHỆ THÔNG TIN 2024</strong></p>
-                    
-                    <p>🌟 Bạn có đam mê với công nghệ và mong muốn trở thành chuyên gia IT tương lai? Ngành Công nghệ thông tin tại Trường Đại học ABC chính là lựa chọn hoàn hảo dành cho bạn!</p>
-                    
-                    <p><strong>✨ ĐIỂM NỔI BẬT:</strong><br/>
-                    🔹 Chương trình đào tạo cập nhật theo chuẩn quốc tế<br/>
-                    🔹 Đội ngũ giảng viên giàu kinh nghiệm thực tế<br/>
-                    🔹 Trang thiết bị lab hiện đại, môi trường học tập chuyên nghiệp<br/>
-                    🔹 Cơ hội thực tập tại các công ty công nghệ hàng đầu</p>
-                    
-                    <p>📈 <strong>Tỷ lệ có việc làm sau tốt nghiệp: 95%</strong><br/>
-                    💰 <strong>Mức lương khởi điểm: 12-18 triệu/tháng</strong></p>
-                    
-                    <p>📞 Đăng ký tư vấn ngay: 0946734111<br/>
-                    🌐 Website: www.university-abc.edu.vn</p>
-                    
-                    <p className="text-primary">#TuyenSinh2024 #CongNgheThongTin #DaiHocABC #IT #Technology</p>
+                    {generatedContent ? (
+                      <div className="whitespace-pre-wrap">{generatedContent}</div>
+                    ) : (
+                      <>
+                        <p>🎓 <strong>THÔNG BÁO TUYỂN SINH NGÀNH CÔNG NGHỆ THÔNG TIN 2024</strong></p>
+                        
+                        <p>🌟 Bạn có đam mê với công nghệ và mong muốn trở thành chuyên gia IT tương lai? Ngành Công nghệ thông tin tại Trường Đại học ABC chính là lựa chọn hoàn hảo dành cho bạn!</p>
+                        
+                        <p><strong>✨ ĐIỂM NỔI BẬT:</strong><br/>
+                        🔹 Chương trình đào tạo cập nhật theo chuẩn quốc tế<br/>
+                        🔹 Đội ngũ giảng viên giàu kinh nghiệm thực tế<br/>
+                        🔹 Trang thiết bị lab hiện đại, môi trường học tập chuyên nghiệp<br/>
+                        🔹 Cơ hội thực tập tại các công ty công nghệ hàng đầu</p>
+                        
+                        <p>📈 <strong>Tỷ lệ có việc làm sau tốt nghiệp: 95%</strong><br/>
+                        💰 <strong>Mức lương khởi điểm: 12-18 triệu/tháng</strong></p>
+                        
+                        <p>📞 Đăng ký tư vấn ngay: 0xxx.xxx.xxx<br/>
+                        🌐 Website: www.university-abc.edu.vn</p>
+                        
+                        <p className="text-primary">#TuyenSinh2024 #CongNgheThongTin #DaiHocABC #IT #Technology</p>
+                      </>
+                    )}
                   </div>
                 </CardContent>
                 
@@ -732,13 +846,15 @@ export default function Home() {
               </Card>
               
               {/* Success notification */}
-              <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="flex items-center space-x-2 text-accent-green">
-                  <CheckCircle className="h-5 w-5" />
-                  <span className="font-medium">Đăng bài thành công!</span>
+              {generatedContent && (
+                <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div className="flex items-center space-x-2 text-accent-green">
+                    <CheckCircle className="h-5 w-5" />
+                    <span className="font-medium">Tạo nội dung thành công!</span>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">Nội dung đã được tạo bởi Gemini AI 2.0 Flash</p>
                 </div>
-                <p className="text-sm text-gray-600 mt-1">Thông báo đã được gửi qua Telegram</p>
-              </div>
+              )}
             </div>
           </div>
         </div>
@@ -1191,8 +1307,9 @@ export default function Home() {
                 <a href="https://www.facebook.com/automarketing.amk" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                   <SiFacebook className="h-5 w-5" />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
-                  <MessageSquare className="h-5 w-5" />
+                <a href="https://zalo.me/0946734111" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                  {/* <MessageSquare className="h-5 w-5" /> */}
+                   <img src="/src/icons/icons8-zalo-color.svg" alt="Zalo" className="h-5 w-5" />
                 </a>
                 <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
                   <Mail className="h-5 w-5" />
