@@ -357,7 +357,7 @@ export default function Home() {
               {/* Workflow visualization */}
               <div className="relative mx-auto w-full rounded-lg shadow-2xl lg:max-w-md">
                 <div>
-                  <img src="src/images/background.jpeg" alt="Background" />
+                  <img src="images/background.jpeg" alt="Background" />
 
                   {/* <div className="mb-4">
                     <div className="flex items-center space-x-2 mb-3">
@@ -1043,7 +1043,7 @@ export default function Home() {
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
                       <img
-                        src="src/icons/logo-page.png"
+                        src="images/logo-page.png"
                         alt="Facebook"
                         className="text-white rounded-full"
                       />
@@ -1801,7 +1801,7 @@ export default function Home() {
                 >
                   {/* <MessageSquare className="h-5 w-5" /> */}
                   <img
-                    src="/src/icons/icons8-zalo-color.svg"
+                    src="images/icons8-zalo-color.svg"
                     alt="Zalo"
                     className="h-5 w-5"
                   />
