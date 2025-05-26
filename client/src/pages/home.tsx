@@ -169,7 +169,7 @@ export default function Home() {
         "https://auto.s4h.edu.vn/webhook/3d846ab7-b8a6-4841-a3eb-03e8f0bdf19e",
       );
       const data = await response.json();
-      setPartners(data.slice(0, 4)); // Limit to 4 partners
+      setPartners(data.slice(0, 12)); // Limit to 4 partners
     } catch (error) {
       console.error("Failed to fetch partners:", error);
       toast({
@@ -1221,7 +1221,7 @@ export default function Home() {
                               alt={partner.Partner}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               onError={(e) => {
-                                e.target.src =
+                                (e.target as HTMLImageElement).src =
                                   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='%236b7280'%3ENo Image%3C/text%3E%3C/svg%3E";
                               }}
                             />
