@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { 
@@ -44,6 +45,7 @@ import { SiFacebook } from "react-icons/si";
 export default function Home() {
   const { toast } = useToast();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [videoDialogOpen, setVideoDialogOpen] = useState(false);
 
     // Demo interactive states
   const [demoInputs, setDemoInputs] = useState({
@@ -200,14 +202,33 @@ export default function Home() {
               </p>
               <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button 
-                    size="lg"
-                    className="bg-primary hover:bg-blue-700 text-white px-8 py-4 text-lg shadow-lg hover:scale-105 transition-all duration-300"
-                    onClick={() => scrollToSection('demo')}
-                  >
-                    <Play className="mr-2 h-5 w-5" />
-                    Xem Demo Ngay
-                  </Button>
+                  <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
+                    <DialogTrigger asChild>
+                      <Button 
+                        size="lg"
+                        className="bg-primary hover:bg-blue-700 text-white px-8 py-4 text-lg shadow-lg hover:scale-105 transition-all duration-300"
+                      >
+                        <Play className="mr-2 h-5 w-5" />
+                        Xem Demo Ngay
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-4xl w-full">
+                      <DialogHeader>
+                        <DialogTitle>Demo - Auto Marketing AMK</DialogTitle>
+                      </DialogHeader>
+                      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                        <iframe 
+                          className="absolute top-0 left-0 w-full h-full rounded-lg"
+                          src="https://www.youtube.com/embed/nA2wccwx6P4?autoplay=1&mute=1" 
+                          title="YouTube video player" 
+                          frameBorder="0" 
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                          referrerPolicy="strict-origin-when-cross-origin" 
+                          allowFullScreen
+                        />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
                   <Button 
                     variant="outline"
                     size="lg"
