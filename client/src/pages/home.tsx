@@ -1299,7 +1299,7 @@ export default function Home() {
                   <MessageSquare className="h-6 w-6" />
                 </div>
                 <h4 className="font-semibold mb-2">Chat Zalo</h4>
-                <p className="text-blue-100"><a href="">Nguyễn Minh Sơn</a></p>
+                <p className="text-blue-100"><a href="https://zalo.me/0946734111">Nguyễn Minh Sơn</a></p>
                 <p className="text-sm text-blue-200">Hỗ trợ tức thì</p>
               </div>
             </div>
@@ -1332,7 +1332,7 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Hỗ trợ</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Tài liệu hướng dẫn</a></li>
+                <li><a href="https://docs.google.com/document/d/1iS3QPD4bR8scpb7tfJNLtsRfsFXp47LnSTYT-V-KVWQ/edit?usp=sharing" className="hover:text-white transition-colors">Tài liệu hướng dẫn</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Video demo</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Liên hệ</a></li>
