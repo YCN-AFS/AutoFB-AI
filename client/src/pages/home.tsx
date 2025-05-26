@@ -91,7 +91,7 @@ export default function Home() {
   });
   const [generatedContent, setGeneratedContent] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
-  const [partners, setPartners] = useState([]);
+  const [partners, setPartners] = useState<any[]>([]);
   const [isLoadingPartners, setIsLoadingPartners] = useState(false);
 
   const form = useForm<InsertDemoRequest>({
@@ -166,7 +166,7 @@ export default function Home() {
     setIsLoadingPartners(true);
     try {
       const response = await fetch(
-        "https://auto.s4h.edu.vn/webhook/3d846ab7-b8a6-4841-a3eb-03e8f0bdf19e",
+        "http://0.0.0.0:5678/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b",
       );
       const data = await response.json();
       setPartners(data.slice(0, 4)); // Limit to 4 partners
@@ -1704,13 +1704,9 @@ export default function Home() {
                   <MessageSquare className="h-6 w-6" />
                 </div>
                 <h4 className="font-semibold mb-2">Chat Zalo</h4>
-<<<<<<< HEAD
-                <p className="text-blue-100"><a href="https://zalo.me/0946734111">Nguyễn Minh Sơn</a></p>
-=======
                 <p className="text-blue-100">
-                  <a href="">Nguyễn Minh Sơn</a>
+                  <a href="https://zalo.me/0946734111">Nguyễn Minh Sơn</a>
                 </p>
->>>>>>> 51d1bbe (add partners)
                 <p className="text-sm text-blue-200">Hỗ trợ tức thì</p>
               </div>
             </div>
@@ -1759,14 +1755,8 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">Hỗ trợ</h4>
               <ul className="space-y-2 text-gray-400">
-<<<<<<< HEAD
-                <li><a href="https://docs.google.com/document/d/1iS3QPD4bR8scpb7tfJNLtsRfsFXp47LnSTYT-V-KVWQ/edit?usp=sharing" className="hover:text-white transition-colors">Tài liệu hướng dẫn</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Video demo</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Liên hệ</a></li>
-=======
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a href="https://docs.google.com/document/d/1iS3QPD4bR8scpb7tfJNLtsRfsFXp47LnSTYT-V-KVWQ/edit?usp=sharing" className="hover:text-white transition-colors">
                     Tài liệu hướng dẫn
                   </a>
                 </li>
@@ -1785,7 +1775,6 @@ export default function Home() {
                     Liên hệ
                   </a>
                 </li>
->>>>>>> 51d1bbe (add partners)
               </ul>
             </div>
 
