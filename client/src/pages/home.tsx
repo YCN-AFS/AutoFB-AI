@@ -166,7 +166,7 @@ export default function Home() {
     setIsLoadingPartners(true);
     try {
       const response = await fetch(
-        "http://0.0.0.0:5678/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b",
+        "https://auto.s4h.edu.vn/webhook/3d846ab7-b8a6-4841-a3eb-03e8f0bdf19e",
       );
       const data = await response.json();
       setPartners(data.slice(0, 4)); // Limit to 4 partners
@@ -1756,7 +1756,10 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Hỗ trợ</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <a href="https://docs.google.com/document/d/1iS3QPD4bR8scpb7tfJNLtsRfsFXp47LnSTYT-V-KVWQ/edit?usp=sharing" className="hover:text-white transition-colors">
+                  <a
+                    href="https://docs.google.com/document/d/1iS3QPD4bR8scpb7tfJNLtsRfsFXp47LnSTYT-V-KVWQ/edit?usp=sharing"
+                    className="hover:text-white transition-colors"
+                  >
                     Tài liệu hướng dẫn
                   </a>
                 </li>
