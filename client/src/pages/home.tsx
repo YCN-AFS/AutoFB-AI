@@ -2,31 +2,63 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { insertDemoRequestSchema, type InsertDemoRequest } from "@shared/schema";
+import {
+  insertDemoRequestSchema,
+  type InsertDemoRequest,
+} from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import { 
-  Clock, 
-  AlertTriangle, 
-  Lightbulb, 
-  TrendingUp, 
-  Shield, 
-  Zap, 
-  Brain, 
-  Users, 
+import {
+  Clock,
+  AlertTriangle,
+  Lightbulb,
+  TrendingUp,
+  Shield,
+  Zap,
+  Brain,
+  Users,
   DollarSign,
   CheckCircle,
   Phone,
@@ -40,7 +72,7 @@ import {
   Rocket,
   Globe,
   CalendarIcon,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 
@@ -49,7 +81,7 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
 
-    // Demo interactive states
+  // Demo interactive states
   const [demoInputs, setDemoInputs] = useState({
     topic: "Tuyển sinh ngành Công nghệ thông tin",
     tone: "Thân thiện, chuyên nghiệp",
@@ -97,13 +129,17 @@ export default function Home() {
     demoRequestMutation.mutate(data);
   };
 
-    // Generate content function
+  // Generate content function
   const generateContent = async () => {
     setIsGenerating(true);
     try {
-      const response = await apiRequest("POST", "/api/generate-content", demoInputs);
+      const response = await apiRequest(
+        "POST",
+        "/api/generate-content",
+        demoInputs,
+      );
       const data = await response.json();
-      
+
       if (data.success) {
         setGeneratedContent(data.content);
         toast({
@@ -116,7 +152,8 @@ export default function Home() {
     } catch (error: any) {
       toast({
         title: "Lỗi",
-        description: error.message || "Không thể tạo nội dung, vui lòng thử lại",
+        description:
+          error.message || "Không thể tạo nội dung, vui lòng thử lại",
         variant: "destructive",
       });
     } finally {
@@ -128,7 +165,9 @@ export default function Home() {
   const fetchPartners = async () => {
     setIsLoadingPartners(true);
     try {
-      const response = await fetch("http://0.0.0.0:5678/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b");
+      const response = await fetch(
+        "https://auto.s4h.edu.vn/webhook/3d846ab7-b8a6-4841-a3eb-03e8f0bdf19e",
+      );
       const data = await response.json();
       setPartners(data.slice(0, 4)); // Limit to 4 partners
     } catch (error) {
@@ -151,7 +190,7 @@ export default function Home() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -162,30 +201,32 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-primary">Auto Marketing - AMK</h1>
+              <h1 className="text-xl font-bold text-primary">
+                Auto Marketing - AMK
+              </h1>
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <button 
-                  onClick={() => scrollToSection('solution')}
+                <button
+                  onClick={() => scrollToSection("solution")}
                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Giải pháp
                 </button>
-                <button 
-                  onClick={() => scrollToSection('benefits')}
+                <button
+                  onClick={() => scrollToSection("benefits")}
                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Lợi ích
                 </button>
-                <button 
-                  onClick={() => scrollToSection('technology')}
+                <button
+                  onClick={() => scrollToSection("technology")}
                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Công nghệ
                 </button>
-                <button 
-                  onClick={() => scrollToSection('partners')}
+                <button
+                  onClick={() => scrollToSection("partners")}
                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Đối tác
@@ -196,8 +237,8 @@ export default function Home() {
                 >
                   Về chúng tôi
                 </button> */}
-                <Button 
-                  onClick={() => scrollToSection('cta')}
+                <Button
+                  onClick={() => scrollToSection("cta")}
                   size="sm"
                   className="bg-primary hover:bg-blue-700 text-white"
                 >
@@ -211,8 +252,18 @@ export default function Home() {
                 size="sm"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               </Button>
             </div>
@@ -231,14 +282,18 @@ export default function Home() {
                 <span className="block">với AI thông minh</span>
               </h1>
               <p className="mt-6 text-xl text-gray-600 max-w-3xl">
-                Giải pháp tích hợp Google Sheets, n8n, AI Gemini và thông báo trên Zalo, Telegram giúp tự động lập kế hoạch, 
-                tạo nội dung và đăng bài Facebook một cách chuyên nghiệp và hiệu quả.
+                Giải pháp tích hợp Google Sheets, n8n, AI Gemini và thông báo
+                trên Zalo, Telegram giúp tự động lập kế hoạch, tạo nội dung và
+                đăng bài Facebook một cách chuyên nghiệp và hiệu quả.
               </p>
               <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
+                  <Dialog
+                    open={videoDialogOpen}
+                    onOpenChange={setVideoDialogOpen}
+                  >
                     <DialogTrigger asChild>
-                      <Button 
+                      <Button
                         size="lg"
                         className="bg-primary hover:bg-blue-700 text-white px-8 py-4 text-lg shadow-lg hover:scale-105 transition-all duration-300"
                       >
@@ -253,33 +308,41 @@ export default function Home() {
                           Demo - Auto Marketing AMK
                         </DialogTitle>
                       </DialogHeader>
-                      <div className="relative w-full mx-auto" style={{ paddingBottom: '56.25%', maxWidth: '100%' }}>
-                        <iframe 
+                      <div
+                        className="relative w-full mx-auto"
+                        style={{ paddingBottom: "56.25%", maxWidth: "100%" }}
+                      >
+                        <iframe
                           className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out transform scale-100 hover:scale-[1.02]"
-                          src={videoDialogOpen ? "https://www.youtube.com/embed/nA2wccwx6P4?autoplay=1&mute=1&rel=0&modestbranding=1" : ""}
-                          title="YouTube video player" 
-                          frameBorder="0" 
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                          referrerPolicy="strict-origin-when-cross-origin" 
+                          src={
+                            videoDialogOpen
+                              ? "https://www.youtube.com/embed/nA2wccwx6P4?autoplay=1&mute=1&rel=0&modestbranding=1"
+                              : ""
+                          }
+                          title="YouTube video player"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          referrerPolicy="strict-origin-when-cross-origin"
                           allowFullScreen
                           style={{
-                            borderRadius: '0px',
-                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
+                            borderRadius: "0px",
+                            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.8)",
                           }}
                         />
                       </div>
                       <div className="p-4 bg-gradient-to-t from-black/80 to-transparent">
                         <p className="text-gray-300 text-sm text-center">
-                          Xem cách hệ thống tự động hóa Facebook hoạt động trong thực tế
+                          Xem cách hệ thống tự động hóa Facebook hoạt động trong
+                          thực tế
                         </p>
                       </div>
                     </DialogContent>
                   </Dialog>
-                  <Button 
+                  <Button
                     variant="outline"
                     size="lg"
                     className="border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 text-lg transition-all duration-300"
-                    onClick={() => scrollToSection('solution')}
+                    onClick={() => scrollToSection("solution")}
                   >
                     Tìm hiểu thêm
                   </Button>
@@ -384,7 +447,8 @@ export default function Home() {
               Những thách thức trong quản lý Facebook thủ công
             </h2>
             <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Các phòng ban marketing và truyền thông đang đối mặt với nhiều khó khăn khi quản lý fanpage
+              Các phòng ban marketing và truyền thông đang đối mặt với nhiều khó
+              khăn khi quản lý fanpage
             </p>
           </div>
 
@@ -394,10 +458,12 @@ export default function Home() {
                 <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Clock className="text-red-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Tốn thời gian</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Tốn thời gian
+                </h3>
                 <p className="text-gray-600">
-                  Phải dành hàng giờ mỗi ngày để lên kế hoạch, viết nội dung và đăng bài thủ công. 
-                  Công việc lặp đi lặp lại làm giảm hiệu quả.
+                  Phải dành hàng giờ mỗi ngày để lên kế hoạch, viết nội dung và
+                  đăng bài thủ công. Công việc lặp đi lặp lại làm giảm hiệu quả.
                 </p>
               </CardContent>
             </Card>
@@ -407,10 +473,12 @@ export default function Home() {
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <AlertTriangle className="text-accent-orange h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Dễ sai sót</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Dễ sai sót
+                </h3>
                 <p className="text-gray-600">
-                  Quản lý thủ công dẫn đến việc đăng nhầm thời gian, quên đăng bài hoặc 
-                  nội dung không nhất quán giữa các bài viết.
+                  Quản lý thủ công dẫn đến việc đăng nhầm thời gian, quên đăng
+                  bài hoặc nội dung không nhất quán giữa các bài viết.
                 </p>
               </CardContent>
             </Card>
@@ -420,10 +488,13 @@ export default function Home() {
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Lightbulb className="text-purple-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Bí ý tưởng</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Bí ý tưởng
+                </h3>
                 <p className="text-gray-600">
-                  Khó khăn trong việc tạo ra nội dung sáng tạo và phù hợp với từng chủ đề. 
-                  Thiếu cảm hứng và ý tưởng mới để thu hút người dùng.
+                  Khó khăn trong việc tạo ra nội dung sáng tạo và phù hợp với
+                  từng chủ đề. Thiếu cảm hứng và ý tưởng mới để thu hút người
+                  dùng.
                 </p>
               </CardContent>
             </Card>
@@ -433,10 +504,12 @@ export default function Home() {
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <TrendingUp className="text-blue-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Khó kiểm soát</h3>
+                <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                  Khó kiểm soát
+                </h3>
                 <p className="text-gray-600">
-                  Không thể theo dõi tiến độ, đánh giá hiệu quả và điều chỉnh chiến lược 
-                  một cách kịp thời và chính xác.
+                  Không thể theo dõi tiến độ, đánh giá hiệu quả và điều chỉnh
+                  chiến lược một cách kịp thời và chính xác.
                 </p>
               </CardContent>
             </Card>
@@ -452,7 +525,8 @@ export default function Home() {
               Giải pháp tự động hóa toàn diện
             </h2>
             <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Hệ thống tích hợp 4 công nghệ hàng đầu để mang lại giải pháp quản lý Facebook hoàn toàn tự động
+              Hệ thống tích hợp 4 công nghệ hàng đầu để mang lại giải pháp quản
+              lý Facebook hoàn toàn tự động
             </p>
           </div>
 
@@ -503,7 +577,9 @@ export default function Home() {
                   <div className="flex items-center justify-center w-12 h-12 bg-white/20 rounded-lg mb-4">
                     <MessageSquare className="h-6 w-6" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">Telegram hoặc Zalo Bot</h3>
+                  <h3 className="text-lg font-bold mb-2">
+                    Telegram hoặc Zalo Bot
+                  </h3>
                   <p className="text-sm opacity-90">Thông báo & kiểm soát</p>
                 </div>
               </div>
@@ -513,45 +589,77 @@ export default function Home() {
           {/* How it works */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Cách thức hoạt động</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                Cách thức hoạt động
+              </h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">1</div>
+                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">
+                    1
+                  </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Lập kế hoạch trong Google Sheets</h4>
-                    <p className="text-gray-600">Nhập chủ đề, thời gian đăng và các thông tin cần thiết vào bảng tính đã được thiết kế sẵn.</p>
+                    <h4 className="font-semibold text-gray-900">
+                      Lập kế hoạch trong Google Sheets
+                    </h4>
+                    <p className="text-gray-600">
+                      Nhập chủ đề, thời gian đăng và các thông tin cần thiết vào
+                      bảng tính đã được thiết kế sẵn.
+                    </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">2</div>
+                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">
+                    2
+                  </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">n8n tự động kích hoạt</h4>
-                    <p className="text-gray-600">Hệ thống theo dõi lịch trình và tự động gửi yêu cầu tạo nội dung đến AI khi đến thời gian.</p>
+                    <h4 className="font-semibold text-gray-900">
+                      n8n tự động kích hoạt
+                    </h4>
+                    <p className="text-gray-600">
+                      Hệ thống theo dõi lịch trình và tự động gửi yêu cầu tạo
+                      nội dung đến AI khi đến thời gian.
+                    </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">3</div>
+                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">
+                    3
+                  </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">AI Gemini tạo nội dung</h4>
-                    <p className="text-gray-600">Trí tuệ nhân tạo phân tích chủ đề và tạo ra nội dung phù hợp, sáng tạo và chuyên nghiệp.</p>
+                    <h4 className="font-semibold text-gray-900">
+                      AI Gemini tạo nội dung
+                    </h4>
+                    <p className="text-gray-600">
+                      Trí tuệ nhân tạo phân tích chủ đề và tạo ra nội dung phù
+                      hợp, sáng tạo và chuyên nghiệp.
+                    </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">4</div>
+                  <div className="flex-shrink-0 w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center font-semibold">
+                    4
+                  </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Đăng bài và thông báo</h4>
-                    <p className="text-gray-600">Hệ thống tự động đăng lên Facebook và gửi thông báo qua Telegram để bạn theo dõi.</p>
+                    <h4 className="font-semibold text-gray-900">
+                      Đăng bài và thông báo
+                    </h4>
+                    <p className="text-gray-600">
+                      Hệ thống tự động đăng lên Facebook và gửi thông báo qua
+                      Telegram để bạn theo dõi.
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-            
+
             <div className="lg:pl-8">
               <div className="bg-gray-50 rounded-xl p-6 shadow-inner">
-                <h4 className="font-semibold text-gray-900 mb-4">Giao diện điều khiển trực tiếp</h4>
+                <h4 className="font-semibold text-gray-900 mb-4">
+                  Giao diện điều khiển trực tiếp
+                </h4>
                 <Card className="overflow-hidden mb-4">
                   <div className="bg-green-600 text-white px-4 py-2 text-sm font-medium flex items-center">
                     <BarChart3 className="mr-2 h-4 w-4" />
@@ -561,23 +669,34 @@ export default function Home() {
                     <div className="grid grid-cols-4 gap-2 text-xs">
                       <div className="font-semibold text-gray-700">Ngày</div>
                       <div className="font-semibold text-gray-700">Chủ đề</div>
-                      <div className="font-semibold text-gray-700">Trạng thái</div>
-                      <div className="font-semibold text-gray-700">Thời gian</div>
+                      <div className="font-semibold text-gray-700">
+                        Trạng thái
+                      </div>
+                      <div className="font-semibold text-gray-700">
+                        Thời gian
+                      </div>
 
-                      
                       <div className="text-gray-600">24/05</div>
                       <div className="text-gray-600">Case study</div>
-                      <div><span className="bg-accent-green text-white px-2 py-1 rounded text-xs">Đã đăng</span></div>
+                      <div>
+                        <span className="bg-accent-green text-white px-2 py-1 rounded text-xs">
+                          Đã đăng
+                        </span>
+                      </div>
                       <div className="text-gray-600">14:30</div>
-                      
+
                       <div className="text-gray-600">25/05</div>
                       <div className="text-gray-600">Tin tức</div>
-                      <div><span className="bg-accent-orange text-white px-2 py-1 rounded text-xs">Lên lịch</span></div>
+                      <div>
+                        <span className="bg-accent-orange text-white px-2 py-1 rounded text-xs">
+                          Lên lịch
+                        </span>
+                      </div>
                       <div className="text-gray-600">09:00</div>
                     </div>
                   </CardContent>
                 </Card>
-                
+
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-gray-600">Trạng thái hệ thống:</span>
                   <span className="flex items-center text-accent-green">
@@ -592,7 +711,10 @@ export default function Home() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/5 to-white" id="benefits">
+      <section
+        className="py-20 bg-gradient-to-br from-primary/5 to-white"
+        id="benefits"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
@@ -610,11 +732,14 @@ export default function Home() {
                   <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mr-4">
                     <Clock className="text-accent-green h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Tiết kiệm 80% thời gian</h3>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Tiết kiệm 80% thời gian
+                  </h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Giảm từ 4-5 giờ xuống còn 1 giờ mỗi ngày cho việc quản lý nội dung. 
-                  Nhân viên có thể tập trung vào các công việc sáng tạo và chiến lược quan trọng hơn.
+                  Giảm từ 4-5 giờ xuống còn 1 giờ mỗi ngày cho việc quản lý nội
+                  dung. Nhân viên có thể tập trung vào các công việc sáng tạo và
+                  chiến lược quan trọng hơn.
                 </p>
               </CardContent>
             </Card>
@@ -625,11 +750,14 @@ export default function Home() {
                   <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
                     <Shield className="text-primary h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Độ chính xác 99%</h3>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Độ chính xác 99%
+                  </h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Loại bỏ hoàn toàn sai sót do con người như đăng nhầm giờ, quên đăng bài hay sai nội dung. 
-                  Hệ thống đảm bảo đăng đúng thời gian và nội dung theo kế hoạch.
+                  Loại bỏ hoàn toàn sai sót do con người như đăng nhầm giờ, quên
+                  đăng bài hay sai nội dung. Hệ thống đảm bảo đăng đúng thời
+                  gian và nội dung theo kế hoạch.
                 </p>
               </CardContent>
             </Card>
@@ -640,11 +768,14 @@ export default function Home() {
                   <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mr-4">
                     <Brain className="text-accent-orange h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Nội dung AI sáng tạo</h3>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Nội dung AI sáng tạo
+                  </h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  AI Gemini tạo ra nội dung đa dạng, phù hợp với từng chủ đề và đối tượng. 
-                  Không còn lo về việc bí ý tưởng hay nội dung nhàm chán.
+                  AI Gemini tạo ra nội dung đa dạng, phù hợp với từng chủ đề và
+                  đối tượng. Không còn lo về việc bí ý tưởng hay nội dung nhàm
+                  chán.
                 </p>
               </CardContent>
             </Card>
@@ -655,11 +786,14 @@ export default function Home() {
                   <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mr-4">
                     <BarChart3 className="text-purple-500 h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Kiểm soát toàn diện</h3>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Kiểm soát toàn diện
+                  </h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Theo dõi real-time mọi hoạt động qua Zalo, Telegram. Xem báo cáo chi tiết về 
-                  số lượng bài đăng, tỷ lệ tương tác và hiệu quả từng chiến dịch.
+                  Theo dõi real-time mọi hoạt động qua Zalo, Telegram. Xem báo
+                  cáo chi tiết về số lượng bài đăng, tỷ lệ tương tác và hiệu quả
+                  từng chiến dịch.
                 </p>
               </CardContent>
             </Card>
@@ -670,11 +804,14 @@ export default function Home() {
                   <div className="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center mr-4">
                     <Users className="text-cyan-500 h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Quản lý đa kênh</h3>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Quản lý đa kênh
+                  </h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Quản lý nhiều fanpage cùng lúc từ một bảng điều khiển duy nhất. 
-                  Phù hợp cho các tổ chức có nhiều đơn vị hoặc dự án khác nhau.
+                  Quản lý nhiều fanpage cùng lúc từ một bảng điều khiển duy
+                  nhất. Phù hợp cho các tổ chức có nhiều đơn vị hoặc dự án khác
+                  nhau.
                 </p>
               </CardContent>
             </Card>
@@ -685,11 +822,14 @@ export default function Home() {
                   <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mr-4">
                     <DollarSign className="text-indigo-500 h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Chi phí tiết kiệm</h3>
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Chi phí tiết kiệm
+                  </h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Giảm 70% chi phí nhân sự cho việc quản lý social media. 
-                  ROI tích cực chỉ sau 2-3 tháng triển khai với chi phí vận hành thấp.
+                  Giảm 70% chi phí nhân sự cho việc quản lý social media. ROI
+                  tích cực chỉ sau 2-3 tháng triển khai với chi phí vận hành
+                  thấp.
                 </p>
               </CardContent>
             </Card>
@@ -731,21 +871,32 @@ export default function Home() {
           <div className="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
             {/* Input side */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Đầu vào từ Google Sheets</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                Đầu vào từ Google Sheets
+              </h3>
               <Card className="shadow-inner bg-gray-50">
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     <div className="flex items-center space-x-4">
-                      <label className="w-24 text-sm font-medium text-gray-700">Chủ đề:</label>
-                      <Input 
+                      <label className="w-24 text-sm font-medium text-gray-700">
+                        Chủ đề:
+                      </label>
+                      <Input
                         value={demoInputs.topic}
-                        onChange={(e) => setDemoInputs({...demoInputs, topic: e.target.value})}
+                        onChange={(e) =>
+                          setDemoInputs({
+                            ...demoInputs,
+                            topic: e.target.value,
+                          })
+                        }
                         className="flex-1 bg-white"
                         placeholder="Nhập chủ đề bài đăng..."
                       />
                     </div>
                     <div className="flex items-center space-x-4">
-                      <label className="w-24 text-sm font-medium text-gray-700">Ngày đăng:</label>
+                      <label className="w-24 text-sm font-medium text-gray-700">
+                        Ngày đăng:
+                      </label>
 
                       <Popover>
                         <PopoverTrigger asChild>
@@ -755,7 +906,9 @@ export default function Home() {
                           >
                             <CalendarIcon className="mr-2 h-4 w-4" />
                             {demoInputs.selectedDate ? (
-                              format(demoInputs.selectedDate, "dd/MM/yyyy", { locale: vi })
+                              format(demoInputs.selectedDate, "dd/MM/yyyy", {
+                                locale: vi,
+                              })
                             ) : (
                               <span>Chọn ngày</span>
                             )}
@@ -767,11 +920,15 @@ export default function Home() {
                             selected={demoInputs.selectedDate}
                             onSelect={(date) => {
                               if (date) {
-                                const formattedDate = format(date, "dd/MM/yyyy", { locale: vi });
+                                const formattedDate = format(
+                                  date,
+                                  "dd/MM/yyyy",
+                                  { locale: vi },
+                                );
                                 setDemoInputs({
-                                  ...demoInputs, 
+                                  ...demoInputs,
                                   selectedDate: date,
-                                  date: formattedDate
+                                  date: formattedDate,
                                 });
                               }
                             }}
@@ -781,51 +938,69 @@ export default function Home() {
                       </Popover>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <label className="w-24 text-sm font-medium text-gray-700">Thời gian:</label>
-                      <Select 
+                      <label className="w-24 text-sm font-medium text-gray-700">
+                        Thời gian:
+                      </label>
+                      <Select
                         value={demoInputs.time}
-                        onValueChange={(value) => setDemoInputs({...demoInputs, time: value})}
+                        onValueChange={(value) =>
+                          setDemoInputs({ ...demoInputs, time: value })
+                        }
                       >
                         <SelectTrigger className="flex-1 bg-white">
                           <SelectValue placeholder="Chọn thời gian" />
                         </SelectTrigger>
                         <SelectContent>
-                          {Array.from({ length: 24 }).map((_, hour) => (
-                            [0, 30].map(minute => {
-                              const timeValue = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+                          {Array.from({ length: 24 }).map((_, hour) =>
+                            [0, 30].map((minute) => {
+                              const timeValue = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
                               return (
                                 <SelectItem key={timeValue} value={timeValue}>
                                   {timeValue}
                                 </SelectItem>
                               );
-                            })
-                          ))}
+                            }),
+                          )}
                         </SelectContent>
                       </Select>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <label className="w-24 text-sm font-medium text-gray-700">Tone:</label>
-                      <Select 
-                        value={demoInputs.tone} 
-                        onValueChange={(value) => setDemoInputs({...demoInputs, tone: value})}
+                      <label className="w-24 text-sm font-medium text-gray-700">
+                        Tone:
+                      </label>
+                      <Select
+                        value={demoInputs.tone}
+                        onValueChange={(value) =>
+                          setDemoInputs({ ...demoInputs, tone: value })
+                        }
                       >
                         <SelectTrigger className="flex-1 bg-white">
                           <SelectValue placeholder="Chọn tone..." />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Thân thiện, chuyên nghiệp">Thân thiện, chuyên nghiệp</SelectItem>
-                          <SelectItem value="Năng động, trẻ trung">Năng động, trẻ trung</SelectItem>
-                          <SelectItem value="Trang trọng, học thuật">Trang trọng, học thuật</SelectItem>
-                          <SelectItem value="Vui tươi, sáng tạo">Vui tươi, sáng tạo</SelectItem>
-                          <SelectItem value="Nghiêm túc, uy tín">Nghiêm túc, uy tín</SelectItem>
+                          <SelectItem value="Thân thiện, chuyên nghiệp">
+                            Thân thiện, chuyên nghiệp
+                          </SelectItem>
+                          <SelectItem value="Năng động, trẻ trung">
+                            Năng động, trẻ trung
+                          </SelectItem>
+                          <SelectItem value="Trang trọng, học thuật">
+                            Trang trọng, học thuật
+                          </SelectItem>
+                          <SelectItem value="Vui tươi, sáng tạo">
+                            Vui tươi, sáng tạo
+                          </SelectItem>
+                          <SelectItem value="Nghiêm túc, uy tín">
+                            Nghiêm túc, uy tín
+                          </SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
-                  
+
                   <div className="mt-6 flex items-center justify-center">
                     {!isGenerating ? (
-                      <Button 
+                      <Button
                         onClick={generateContent}
                         className="bg-primary hover:bg-blue-700 text-white"
                         disabled={!demoInputs.topic.trim() || !demoInputs.tone}
@@ -836,11 +1011,19 @@ export default function Home() {
                     ) : (
                       <div className="flex items-center space-x-2 text-primary">
                         <Brain className="h-5 w-5" />
-                        <span className="text-sm font-medium">AI đang xử lý...</span>
+                        <span className="text-sm font-medium">
+                          AI đang xử lý...
+                        </span>
                         <div className="flex space-x-1">
                           <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                          <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                          <div
+                            className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                            style={{ animationDelay: "0.1s" }}
+                          ></div>
+                          <div
+                            className="w-2 h-2 bg-primary rounded-full animate-bounce"
+                            style={{ animationDelay: "0.2s" }}
+                          ></div>
                         </div>
                       </div>
                     )}
@@ -851,64 +1034,118 @@ export default function Home() {
 
             {/* Output side */}
             <div className="mt-12 lg:mt-0">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Đầu ra - Bài đăng Facebook</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                Đầu ra - Bài đăng Facebook
+              </h3>
               <Card className="shadow-lg overflow-hidden">
                 {/* Facebook post header */}
                 <div className="p-4 border-b border-gray-100">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                      <img src="src/icons/logo-page.png" alt="Facebook" className="text-white rounded-full" />
-
+                      <img
+                        src="src/icons/logo-page.png"
+                        alt="Facebook"
+                        className="text-white rounded-full"
+                      />
 
                       {/* <Globe className="text-white h-5 w-5" /> */}
                     </div>
                     <div>
-                      <h4 className="font-semibold text-gray-900">Auto Marketing - AMK </h4>
-                      <p className="text-sm text-gray-500">{demoInputs.date} lúc {demoInputs.time} • <Globe className="inline h-3 w-3" /></p>
+                      <h4 className="font-semibold text-gray-900">
+                        Auto Marketing - AMK{" "}
+                      </h4>
+                      <p className="text-sm text-gray-500">
+                        {demoInputs.date} lúc {demoInputs.time} •{" "}
+                        <Globe className="inline h-3 w-3" />
+                      </p>
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Facebook post content */}
                 <CardContent className="p-4">
                   <div className="text-gray-900 leading-relaxed space-y-3">
                     {generatedContent ? (
-                      <div className="whitespace-pre-wrap">{generatedContent}</div>
+                      <div className="whitespace-pre-wrap">
+                        {generatedContent}
+                      </div>
                     ) : (
                       <>
-                        <p>🎓 <strong>THÔNG BÁO TUYỂN SINH NGÀNH CÔNG NGHỆ THÔNG TIN 2025</strong></p>
-                        
-                        <p>🌟 Bạn có đam mê với công nghệ và mong muốn trở thành chuyên gia IT tương lai? Ngành Công nghệ thông tin tại Trường Đại học ABC chính là lựa chọn hoàn hảo dành cho bạn!</p>
-                        
-                        <p><strong>✨ ĐIỂM NỔI BẬT:</strong><br/>
-                        🔹 Chương trình đào tạo cập nhật theo chuẩn quốc tế<br/>
-                        🔹 Các dự án đã áp dụng vào thực tế<br/>
-                        🔹 Trang thiết bị lab hiện đại, môi trường học tập chuyên nghiệp<br/>
-                        🔹 Cơ hội thực tập tại các công ty công nghệ hàng đầu</p>
-                        
-                        <p>📈 <strong>Tỷ lệ có việc làm sau tốt nghiệp: 95%</strong><br/>
-                        💰 <strong>Mức lương khởi điểm: 12-18 triệu/tháng</strong></p>
-                        
-                        <p>📞 Đăng ký tư vấn ngay: 0xxx.xxx.xxx<br/>
-                        🌐 Website: www.university-abc.edu.vn</p>
-                        
-                        <p className="text-primary">#TuyenSinh2024 #CongNgheThongTin #DaiHocABC #IT #Technology</p>
+                        <p>
+                          🎓{" "}
+                          <strong>
+                            THÔNG BÁO TUYỂN SINH NGÀNH CÔNG NGHỆ THÔNG TIN 2025
+                          </strong>
+                        </p>
+
+                        <p>
+                          🌟 Bạn có đam mê với công nghệ và mong muốn trở thành
+                          chuyên gia IT tương lai? Ngành Công nghệ thông tin tại
+                          Trường Đại học ABC chính là lựa chọn hoàn hảo dành cho
+                          bạn!
+                        </p>
+
+                        <p>
+                          <strong>✨ ĐIỂM NỔI BẬT:</strong>
+                          <br />
+                          🔹 Chương trình đào tạo cập nhật theo chuẩn quốc tế
+                          <br />
+                          🔹 Các dự án đã áp dụng vào thực tế
+                          <br />
+                          🔹 Trang thiết bị lab hiện đại, môi trường học tập
+                          chuyên nghiệp
+                          <br />
+                          🔹 Cơ hội thực tập tại các công ty công nghệ hàng đầu
+                        </p>
+
+                        <p>
+                          📈{" "}
+                          <strong>Tỷ lệ có việc làm sau tốt nghiệp: 95%</strong>
+                          <br />
+                          💰{" "}
+                          <strong>
+                            Mức lương khởi điểm: 12-18 triệu/tháng
+                          </strong>
+                        </p>
+
+                        <p>
+                          📞 Đăng ký tư vấn ngay: 0xxx.xxx.xxx
+                          <br />
+                          🌐 Website: www.university-abc.edu.vn
+                        </p>
+
+                        <p className="text-primary">
+                          #TuyenSinh2024 #CongNgheThongTin #DaiHocABC #IT
+                          #Technology
+                        </p>
                       </>
                     )}
                   </div>
                 </CardContent>
-                
+
                 {/* Facebook post actions */}
                 <div className="border-t border-gray-100 px-4 py-3">
                   <div className="flex items-center justify-between text-sm text-gray-500">
                     <div className="flex items-center space-x-4">
-                      <Button variant="ghost" size="sm" className="text-gray-500 hover:text-primary">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-gray-500 hover:text-primary"
+                      >
                         👍 Thích
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-gray-500 hover:text-primary">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-gray-500 hover:text-primary"
+                      >
                         💬 Bình luận
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-gray-500 hover:text-primary">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-gray-500 hover:text-primary"
+                      >
                         📤 Chia sẻ
                       </Button>
                     </div>
@@ -916,15 +1153,19 @@ export default function Home() {
                   </div>
                 </div>
               </Card>
-              
+
               {/* Success notification */}
               {generatedContent && (
                 <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
                   <div className="flex items-center space-x-2 text-accent-green">
                     <CheckCircle className="h-5 w-5" />
-                    <span className="font-medium">Tạo nội dung thành công!</span>
+                    <span className="font-medium">
+                      Tạo nội dung thành công!
+                    </span>
                   </div>
-                  <p className="text-sm text-gray-600 mt-1">Nội dung đã được tạo bởi Gemini AI 2.0 Flash</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Nội dung đã được tạo bởi Gemini AI 2.0 Flash
+                  </p>
                 </div>
               )}
             </div>
@@ -940,14 +1181,17 @@ export default function Home() {
               Đối tác tin cậy
             </h2>
             <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Những đối tác đồng hành cùng chúng tôi trong việc phát triển và ứng dụng giải pháp tự động hóa
+              Những đối tác đồng hành cùng chúng tôi trong việc phát triển và
+              ứng dụng giải pháp tự động hóa
             </p>
           </div>
 
           {isLoadingPartners ? (
             <div className="flex justify-center items-center py-12">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-              <span className="ml-3 text-gray-600">Đang tải thông tin đối tác...</span>
+              <span className="ml-3 text-gray-600">
+                Đang tải thông tin đối tác...
+              </span>
             </div>
           ) : partners.length > 0 ? (
             <div className="relative max-w-5xl mx-auto">
@@ -960,21 +1204,25 @@ export default function Home() {
               >
                 <CarouselContent className="-ml-2 md:-ml-4">
                   {partners.map((partner, index) => (
-                    <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <CarouselItem
+                      key={index}
+                      className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
+                    >
                       <Card className="h-full group hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden">
-                        <a 
-                          href={partner.Path} 
-                          target="_blank" 
+                        <a
+                          href={partner.Path}
+                          target="_blank"
                           rel="noopener noreferrer"
                           className="block h-full"
                         >
                           <div className="aspect-video overflow-hidden">
-                            <img 
-                              src={partner.Img} 
+                            <img
+                              src={partner.Img}
                               alt={partner.Partner}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                               onError={(e) => {
-                                e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='%236b7280'%3ENo Image%3C/text%3E%3C/svg%3E";
+                                e.target.src =
+                                  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='%236b7280'%3ENo Image%3C/text%3E%3C/svg%3E";
                               }}
                             />
                           </div>
@@ -1001,18 +1249,23 @@ export default function Home() {
                 <CarouselPrevious className="hidden md:flex -left-12 bg-white shadow-lg border-2 hover:bg-primary hover:text-white hover:border-primary" />
                 <CarouselNext className="hidden md:flex -right-12 bg-white shadow-lg border-2 hover:bg-primary hover:text-white hover:border-primary" />
               </Carousel>
-              
+
               {/* Mobile navigation dots */}
               <div className="flex justify-center mt-6 md:hidden space-x-2">
                 {partners.map((_, index) => (
-                  <div key={index} className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                  <div
+                    key={index}
+                    className="w-2 h-2 bg-gray-300 rounded-full"
+                  ></div>
                 ))}
               </div>
             </div>
           ) : (
             <div className="text-center py-12">
               <Globe className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <p className="text-gray-600">Hiện tại chưa có thông tin đối tác</p>
+              <p className="text-gray-600">
+                Hiện tại chưa có thông tin đối tác
+              </p>
             </div>
           )}
         </div>
@@ -1026,7 +1279,8 @@ export default function Home() {
               Công nghệ nền tảng đáng tin cậy
             </h2>
             <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Tích hợp các công nghệ hàng đầu thế giới để đảm bảo hiệu suất và độ tin cậy cao nhất
+              Tích hợp các công nghệ hàng đầu thế giới để đảm bảo hiệu suất và
+              độ tin cậy cao nhất
             </p>
           </div>
 
@@ -1036,9 +1290,11 @@ export default function Home() {
                 <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                   <BarChart3 className="text-green-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">Google Sheets</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  Google Sheets
+                </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Nền tảng bảng tính trực tuyến của Google, cho phép quản lý và 
+                  Nền tảng bảng tính trực tuyến của Google, cho phép quản lý và
                   lập kế hoạch nội dung một cách trực quan và dễ dàng.
                 </p>
                 <div className="mt-4">
@@ -1055,10 +1311,12 @@ export default function Home() {
                 <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                   <Cog className="text-purple-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">n8n Workflow</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  n8n Workflow
+                </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Công cụ tự động hóa quy trình mã nguồn mở, kết nối các ứng dụng 
-                  và dịch vụ để tạo ra luồng công việc tự động.
+                  Công cụ tự động hóa quy trình mã nguồn mở, kết nối các ứng
+                  dụng và dịch vụ để tạo ra luồng công việc tự động.
                 </p>
                 <div className="mt-4">
                   <span className="inline-flex items-center px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
@@ -1074,9 +1332,11 @@ export default function Home() {
                 <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                   <Brain className="text-blue-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">Google Gemini AI</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  Google Gemini AI
+                </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Mô hình AI tiên tiến của Google, có khả năng tạo ra nội dung 
+                  Mô hình AI tiên tiến của Google, có khả năng tạo ra nội dung
                   chất lượng cao, sáng tạo và phù hợp với ngữ cảnh.
                 </p>
                 <div className="mt-4">
@@ -1093,9 +1353,11 @@ export default function Home() {
                 <div className="w-16 h-16 bg-cyan-100 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                   <MessageSquare className="text-cyan-600 h-8 w-8" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-3">Telegram, Zalo Bot</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                  Telegram, Zalo Bot
+                </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Nền tảng nhắn tin bảo mật cao, được sử dụng để gửi thông báo 
+                  Nền tảng nhắn tin bảo mật cao, được sử dụng để gửi thông báo
                   real-time và kiểm soát hệ thống từ xa.
                 </p>
                 <div className="mt-4">
@@ -1111,7 +1373,9 @@ export default function Home() {
           {/* Technical advantages */}
           <Card className="mt-16 shadow-xl">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">Ưu điểm kỹ thuật</h3>
+              <h3 className="text-2xl font-bold text-gray-900 text-center mb-8">
+                Ưu điểm kỹ thuật
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-8 h-8 bg-accent-green rounded-full flex items-center justify-center">
@@ -1119,27 +1383,38 @@ export default function Home() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-900">Bảo mật cao</h4>
-                    <p className="text-sm text-gray-600">Tất cả dữ liệu được mã hóa và lưu trữ an toàn trên Google Cloud</p>
+                    <p className="text-sm text-gray-600">
+                      Tất cả dữ liệu được mã hóa và lưu trữ an toàn trên Google
+                      Cloud
+                    </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                     <Zap className="text-white h-4 w-4" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Khả năng mở rộng</h4>
-                    <p className="text-sm text-gray-600">Dễ dàng thêm nhiều fanpage và tùy chỉnh theo nhu cầu</p>
+                    <h4 className="font-semibold text-gray-900">
+                      Khả năng mở rộng
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Dễ dàng thêm nhiều fanpage và tùy chỉnh theo nhu cầu
+                    </p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 w-8 h-8 bg-accent-orange rounded-full flex items-center justify-center">
                     <Rocket className="text-white h-4 w-4" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">Đồng bộ real-time</h4>
-                    <p className="text-sm text-gray-600">Cập nhật tức thời mọi thay đổi từ Google Sheets</p>
+                    <h4 className="font-semibold text-gray-900">
+                      Đồng bộ real-time
+                    </h4>
+                    <p className="text-sm text-gray-600">
+                      Cập nhật tức thời mọi thay đổi từ Google Sheets
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1284,16 +1559,22 @@ export default function Home() {
               Sẵn sàng tự động hóa Facebook của bạn?
             </h2>
             <p className="text-xl text-blue-100 mb-8 leading-relaxed">
-              Tham gia cùng hàng trăm tổ chức đã tin tưởng và sử dụng giải pháp của chúng tôi. 
-              Đăng ký demo miễn phí ngay hôm nay để trải nghiệm sức mạnh của tự động hóa AI.
+              Tham gia cùng hàng trăm tổ chức đã tin tưởng và sử dụng giải pháp
+              của chúng tôi. Đăng ký demo miễn phí ngay hôm nay để trải nghiệm
+              sức mạnh của tự động hóa AI.
             </p>
-            
+
             {/* CTA Form */}
             <Card className="max-w-2xl mx-auto shadow-2xl">
               <CardContent className="p-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Đăng ký Demo miễn phí</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">
+                  Đăng ký Demo miễn phí
+                </h3>
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="space-y-4"
+                  >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <FormField
                         control={form.control}
@@ -1308,7 +1589,7 @@ export default function Home() {
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="phone"
@@ -1323,7 +1604,7 @@ export default function Home() {
                         )}
                       />
                     </div>
-                    
+
                     <FormField
                       control={form.control}
                       name="email"
@@ -1331,13 +1612,17 @@ export default function Home() {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input type="email" placeholder="email@company.com" {...field} />
+                            <Input
+                              type="email"
+                              placeholder="email@company.com"
+                              {...field}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    
+
                     <FormField
                       control={form.control}
                       name="requirements"
@@ -1345,19 +1630,19 @@ export default function Home() {
                         <FormItem>
                           <FormLabel>Nhu cầu cụ thể</FormLabel>
                           <FormControl>
-                            <Textarea 
+                            <Textarea
                               rows={3}
                               placeholder="Mô tả ngắn gọn về nhu cầu và số lượng fanpage cần quản lý..."
-                              {...field} 
+                              {...field}
                             />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
-                    
-                    <Button 
-                      type="submit" 
+
+                    <Button
+                      type="submit"
                       size="lg"
                       className="w-full bg-primary hover:bg-blue-700 text-white py-4 text-lg shadow-lg hover:scale-105 transition-all duration-300"
                       disabled={demoRequestMutation.isPending}
@@ -1376,7 +1661,7 @@ export default function Home() {
                     </Button>
                   </form>
                 </Form>
-                
+
                 <div className="mt-6 flex items-center justify-center space-x-6 text-sm text-gray-600">
                   <div className="flex items-center">
                     <CheckCircle className="text-accent-green mr-2 h-4 w-4" />
@@ -1393,7 +1678,7 @@ export default function Home() {
                 </div>
               </CardContent>
             </Card>
-            
+
             {/* Alternative contact methods */}
             <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
               <div className="text-center">
@@ -1404,7 +1689,7 @@ export default function Home() {
                 <p className="text-blue-100">0946734111</p>
                 <p className="text-sm text-blue-200">8:00 - 17:00 (T2-T6)</p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
                   <Mail className="h-6 w-6" />
@@ -1413,13 +1698,19 @@ export default function Home() {
                 <p className="text-blue-100">nmson@lhu.edu.vn</p>
                 <p className="text-sm text-blue-200">Phản hồi trong 2h</p>
               </div>
-              
+
               <div className="text-center">
                 <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
                   <MessageSquare className="h-6 w-6" />
                 </div>
                 <h4 className="font-semibold mb-2">Chat Zalo</h4>
+<<<<<<< HEAD
                 <p className="text-blue-100"><a href="https://zalo.me/0946734111">Nguyễn Minh Sơn</a></p>
+=======
+                <p className="text-blue-100">
+                  <a href="">Nguyễn Minh Sơn</a>
+                </p>
+>>>>>>> 51d1bbe (add partners)
                 <p className="text-sm text-blue-200">Hỗ trợ tức thì</p>
               </div>
             </div>
@@ -1434,42 +1725,94 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-bold mb-4">Auto Marketing - AMK</h3>
               <p className="text-gray-400 leading-relaxed">
-                Giải pháp tự động hóa quản lý Facebook thông minh, 
-                giúp tổ chức tiết kiệm thời gian và nâng cao hiệu quả truyền thông.
+                Giải pháp tự động hóa quản lý Facebook thông minh, giúp tổ chức
+                tiết kiệm thời gian và nâng cao hiệu quả truyền thông.
               </p>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Giải pháp</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Tự động đăng bài</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Tạo nội dung AI</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Quản lý đa kênh</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Báo cáo thống kê</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Tự động đăng bài
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Tạo nội dung AI
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Quản lý đa kênh
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Báo cáo thống kê
+                  </a>
+                </li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Hỗ trợ</h4>
               <ul className="space-y-2 text-gray-400">
+<<<<<<< HEAD
                 <li><a href="https://docs.google.com/document/d/1iS3QPD4bR8scpb7tfJNLtsRfsFXp47LnSTYT-V-KVWQ/edit?usp=sharing" className="hover:text-white transition-colors">Tài liệu hướng dẫn</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Video demo</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
                 <li><a href="#" className="hover:text-white transition-colors">Liên hệ</a></li>
+=======
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Tài liệu hướng dẫn
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Video demo
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    FAQ
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Liên hệ
+                  </a>
+                </li>
+>>>>>>> 51d1bbe (add partners)
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Kết nối</h4>
               <div className="flex space-x-4 mb-4">
-                <a href="https://www.facebook.com/automarketing.amk" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                <a
+                  href="https://www.facebook.com/automarketing.amk"
+                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                >
                   <SiFacebook className="h-5 w-5" />
                 </a>
-                <a href="https://zalo.me/0946734111" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                <a
+                  href="https://zalo.me/0946734111"
+                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                >
                   {/* <MessageSquare className="h-5 w-5" /> */}
-                   <img src="/src/icons/icons8-zalo-color.svg" alt="Zalo" className="h-5 w-5" />
+                  <img
+                    src="/src/icons/icons8-zalo-color.svg"
+                    alt="Zalo"
+                    className="h-5 w-5"
+                  />
                 </a>
-                <a href="#" className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors">
+                <a
+                  href="#"
+                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-primary transition-colors"
+                >
                   <Mail className="h-5 w-5" />
                 </a>
               </div>
@@ -1478,7 +1821,7 @@ export default function Home() {
               </p>
             </div>
           </div>
-          
+
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2025 Được phát triển bởi AMK - Auto Marketing.</p>
             <p className="mt-2 text-sm">
