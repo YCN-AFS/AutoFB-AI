@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { 
@@ -38,7 +39,8 @@ import {
   Cog,
   Rocket,
   Globe,
-  CalendarIcon
+  CalendarIcon,
+  ExternalLink
 } from "lucide-react";
 import { SiFacebook } from "react-icons/si";
 
@@ -57,6 +59,8 @@ export default function Home() {
   });
   const [generatedContent, setGeneratedContent] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
+  const [partners, setPartners] = useState([]);
+  const [isLoadingPartners, setIsLoadingPartners] = useState(false);
 
   const form = useForm<InsertDemoRequest>({
     resolver: zodResolver(insertDemoRequestSchema),
@@ -120,6 +124,30 @@ export default function Home() {
     }
   };
 
+  // Fetch partners function
+  const fetchPartners = async () => {
+    setIsLoadingPartners(true);
+    try {
+      const response = await fetch("http://0.0.0.0:5678/webhook-test/c589f124-73e3-4998-a9e1-6edcadd3a16b");
+      const data = await response.json();
+      setPartners(data.slice(0, 4)); // Limit to 4 partners
+    } catch (error) {
+      console.error("Failed to fetch partners:", error);
+      toast({
+        title: "Lỗi",
+        description: "Không thể tải thông tin đối tác",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoadingPartners(false);
+    }
+  };
+
+  // Fetch partners on component mount
+  useEffect(() => {
+    fetchPartners();
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -155,6 +183,12 @@ export default function Home() {
                   className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
                 >
                   Công nghệ
+                </button>
+                <button 
+                  onClick={() => scrollToSection('partners')}
+                  className="text-gray-600 hover:text-primary px-3 py-2 text-sm font-medium transition-colors"
+                >
+                  Đối tác
                 </button>
                 {/* <button 
                   onClick={() => scrollToSection('team')}
@@ -895,6 +929,92 @@ export default function Home() {
               )}
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Partners Section */}
+      <section className="py-20 bg-white" id="partners">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+              Đối tác tin cậy
+            </h2>
+            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+              Những đối tác đồng hành cùng chúng tôi trong việc phát triển và ứng dụng giải pháp tự động hóa
+            </p>
+          </div>
+
+          {isLoadingPartners ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+              <span className="ml-3 text-gray-600">Đang tải thông tin đối tác...</span>
+            </div>
+          ) : partners.length > 0 ? (
+            <div className="relative max-w-5xl mx-auto">
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  {partners.map((partner, index) => (
+                    <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                      <Card className="h-full group hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden">
+                        <a 
+                          href={partner.Path} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="block h-full"
+                        >
+                          <div className="aspect-video overflow-hidden">
+                            <img 
+                              src={partner.Img} 
+                              alt={partner.Partner}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              onError={(e) => {
+                                e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.3em' fill='%236b7280'%3ENo Image%3C/text%3E%3C/svg%3E";
+                              }}
+                            />
+                          </div>
+                          <CardContent className="p-6">
+                            <div className="flex items-start justify-between mb-3">
+                              <h3 className="text-lg font-bold text-gray-900 group-hover:text-primary transition-colors">
+                                {partner.Partner}
+                              </h3>
+                              <ExternalLink className="h-4 w-4 text-gray-400 group-hover:text-primary transition-colors flex-shrink-0 ml-2" />
+                            </div>
+                            <p className="text-gray-600 text-sm leading-relaxed line-clamp-4">
+                              {partner.Description}
+                            </p>
+                            <div className="mt-4 inline-flex items-center text-primary text-sm font-medium group-hover:underline">
+                              Tìm hiểu thêm
+                              <ArrowRight className="ml-1 h-3 w-3 group-hover:translate-x-1 transition-transform" />
+                            </div>
+                          </CardContent>
+                        </a>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious className="hidden md:flex -left-12 bg-white shadow-lg border-2 hover:bg-primary hover:text-white hover:border-primary" />
+                <CarouselNext className="hidden md:flex -right-12 bg-white shadow-lg border-2 hover:bg-primary hover:text-white hover:border-primary" />
+              </Carousel>
+              
+              {/* Mobile navigation dots */}
+              <div className="flex justify-center mt-6 md:hidden space-x-2">
+                {partners.map((_, index) => (
+                  <div key={index} className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <Globe className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+              <p className="text-gray-600">Hiện tại chưa có thông tin đối tác</p>
+            </div>
+          )}
         </div>
       </section>
 
