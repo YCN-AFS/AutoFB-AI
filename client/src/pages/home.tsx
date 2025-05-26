@@ -316,7 +316,7 @@ export default function Home() {
                           className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out transform scale-100 hover:scale-[1.02]"
                           src={
                             videoDialogOpen
-                              ? "https://www.youtube.com/embed/nA2wccwx6P4?autoplay=1&mute=1&rel=0&modestbranding=1"
+                              ? "https://www.youtube.com/embed/OFWVTz-Mca4?si=nXUkdiuzmwG0gtgW"
                               : ""
                           }
                           title="YouTube video player"
@@ -1764,7 +1764,12 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-white transition-colors">
+                  <a 
+                    href="https://youtu.be/OFWVTz-Mca4" 
+                    className="hover:text-white transition-colors" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                  >
                     Video demo
                   </a>
                 </li>
