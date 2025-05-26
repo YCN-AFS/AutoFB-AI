@@ -823,7 +823,10 @@ export default function Home() {
                 <div className="p-4 border-b border-gray-100">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-                      <Globe className="text-white h-5 w-5" />
+                      <img src="src/icons/logo-page.png" alt="Facebook" className="text-white rounded-full" />
+
+
+                      {/* <Globe className="text-white h-5 w-5" /> */}
                     </div>
                     <div>
                       <h4 className="font-semibold text-gray-900">Auto Marketing - AMK </h4>

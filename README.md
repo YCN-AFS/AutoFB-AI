@@ -12,7 +12,7 @@ AutoFB-AI là một ứng dụng web được xây dựng với React, Express, 
 
 1. Clone repository:
 ```bash
-git clone [URL_REPOSITORY]
+git clone https://github.com/YCN-AFS/AutoFB-AI.git
 cd AutoFB-AI
 ```
 
