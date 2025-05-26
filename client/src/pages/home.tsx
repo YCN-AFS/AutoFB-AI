@@ -212,20 +212,32 @@ export default function Home() {
                         Xem Demo Ngay
                       </Button>
                     </DialogTrigger>
-                    <DialogContent className="max-w-4xl w-full">
-                      <DialogHeader>
-                        <DialogTitle>Demo - Auto Marketing AMK</DialogTitle>
+                    <DialogContent className="max-w-5xl w-[95vw] max-h-[90vh] p-0 overflow-hidden bg-black/95 border-0">
+                      <DialogHeader className="p-6 pb-4 bg-gradient-to-b from-black/80 to-transparent">
+                        <DialogTitle className="text-white text-xl font-bold flex items-center">
+                          <Play className="mr-3 h-6 w-6 text-primary" />
+                          Demo - Auto Marketing AMK
+                        </DialogTitle>
                       </DialogHeader>
-                      <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                      <div className="relative w-full mx-auto" style={{ paddingBottom: '56.25%', maxWidth: '100%' }}>
                         <iframe 
-                          className="absolute top-0 left-0 w-full h-full rounded-lg"
-                          src="https://www.youtube.com/embed/nA2wccwx6P4?autoplay=1&mute=1" 
+                          className="absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out transform scale-100 hover:scale-[1.02]"
+                          src={videoDialogOpen ? "https://www.youtube.com/embed/nA2wccwx6P4?autoplay=1&mute=1&rel=0&modestbranding=1" : ""}
                           title="YouTube video player" 
                           frameBorder="0" 
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                           referrerPolicy="strict-origin-when-cross-origin" 
                           allowFullScreen
+                          style={{
+                            borderRadius: '0px',
+                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.8)',
+                          }}
                         />
+                      </div>
+                      <div className="p-4 bg-gradient-to-t from-black/80 to-transparent">
+                        <p className="text-gray-300 text-sm text-center">
+                          Xem cách hệ thống tự động hóa Facebook hoạt động trong thực tế
+                        </p>
                       </div>
                     </DialogContent>
                   </Dialog>
